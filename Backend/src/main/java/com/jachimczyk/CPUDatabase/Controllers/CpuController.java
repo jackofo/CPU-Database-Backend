@@ -1,10 +1,16 @@
 package com.jachimczyk.CPUDatabase.Controllers;
 
+import com.fasterxml.jackson.databind.util.ArrayIterator;
 import com.jachimczyk.CPUDatabase.Model.Cpu;
 import com.jachimczyk.CPUDatabase.Model.CpuRepository;
+import com.jachimczyk.CPUDatabase.Model.CpuShort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 @CrossOrigin("http://localhost:4200")
 @RequestMapping(path = "/cpu")
@@ -33,15 +39,16 @@ public class CpuController
     }
 
     @GetMapping(path = "/all")
-    public Iterable<Cpu> GetAll()
+    public Iterable<CpuShort> GetAll()
     {
-        Iterable<Cpu> cpus = cpuRepository.findAll();
-//        for (Cpu c:cpus)
-//        {
-//            System.out.println(c.toString());
-//        }
+        Collection<Cpu> cpus = (Collection) cpuRepository.findAll();
+        ArrayList<CpuShort> cpusShort = new ArrayList<CpuShort>();
+        for (Cpu c : cpus)
+        {
+            cpusShort.add(new CpuShort(c));
+        }
 
-        return cpus;
+        return cpusShort;
     }
 }
 
