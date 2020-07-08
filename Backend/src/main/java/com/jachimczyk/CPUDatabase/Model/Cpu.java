@@ -1,23 +1,25 @@
 package com.jachimczyk.CPUDatabase.Model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Models")
-public class Model
+@Table(name = "CPUs")
+public class Cpu
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String model;
     private float clockSpeed;
     private int coreNumber;
     private int threadNumber;
     private int tdp;
     private float price;
+    private String brand;
 
-    @ManyToOne
-    private Brand brand;
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @ManyToOne
     private Socket socket;
 
@@ -27,22 +29,22 @@ public class Model
         return id;
     }
 
-    public String getName()
+    public String getModel()
     {
-        return name;
+        return model;
     }
 
-    public void setName(String name)
+    public void setModel(String model)
     {
-        this.name = name;
+        this.model = model;
     }
 
-    public Brand getBrand()
+    public String getBrand()
     {
         return brand;
     }
 
-    public void setBrand(Brand brand)
+    public void setBrand(String brand)
     {
         this.brand = brand;
     }
@@ -107,4 +109,20 @@ public class Model
         this.price = price;
     }
     //</editor-fold>
+
+    @Override
+    public String toString()
+    {
+        return "Cpu{" +
+                "id=" + id +
+                ", model='" + model + '\'' +
+                ", clockSpeed=" + clockSpeed +
+                ", coreNumber=" + coreNumber +
+                ", threadNumber=" + threadNumber +
+                ", tdp=" + tdp +
+                ", price=" + price +
+                ", brand='" + brand + '\'' +
+                ", socket=" + socket.toString() +
+                '}';
+    }
 }

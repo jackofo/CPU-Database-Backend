@@ -32,4 +32,14 @@ public class Socket
         this.name = name;
     }
     //</editor-fold>
+
+
+    @Override
+    public String toString()
+    {
+        return "Socket{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
