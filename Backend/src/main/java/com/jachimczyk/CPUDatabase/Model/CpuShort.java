@@ -1,18 +1,20 @@
 package com.jachimczyk.CPUDatabase.Model;
 
+import javax.persistence.Column;
+
 public class CpuShort
 {
     private Long id;
     private String model;
     private String brand;
-    private Socket socket;
+    private Long socket;
 
     public CpuShort(){}
     public CpuShort(Cpu cpu)
     {
         this.brand = cpu.getBrand();
         this.model = cpu.getModel();
-        this.socket = cpu.getSocket();
+        this.socket = cpu.getSocket().getId();
         this.id = cpu.getId();
     }
 
@@ -47,12 +49,12 @@ public class CpuShort
         this.brand = brand;
     }
 
-    public Socket getSocket()
+    public Long getSocket()
     {
         return socket;
     }
 
-    public void setSocket(Socket socket)
+    public void setSocket(Long socket)
     {
         this.socket = socket;
     }

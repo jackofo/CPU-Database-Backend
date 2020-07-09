@@ -28,7 +28,10 @@ public class CpuController
         try
         {
             Cpu cpu = cpuDto.toCpu();
-            cpu.setId(cpuDto.getId());
+            if (cpuDto.getId() != null)
+            {
+                cpu.setId(cpuDto.getId());
+            }
             cpu.setSocket(entityManager.find(Socket.class, cpuDto.getSocket()));
             entityManager.merge(cpu);
             entityManager.flush();
@@ -45,24 +48,14 @@ public class CpuController
     }
 
     @Transactional
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public HttpStatus Update(@RequestBody CpuDto cpuDto)
+    @GetMapping(path = "/delete")
+    public HttpStatus Delete(@RequestParam Long id)
     {
         try
         {
-            Cpu cpu = cpuDto.toCpu();
-//            Cpu cpu = entityManager.find(Cpu.class, cpuDto.getId());
-//            cpu.setModel(cpuDto.getModel());
-//            cpu.setClockSpeed(cpuDto.getClockSpeed());
-//            cpu.setCoreNumber(cpuDto.getCoreNumber());
-//            cpu.setThreadNumber(cpuDto.getThreadNumber());
-//            cpu.setTdp(cpuDto.getTdp());
-//            cpu.setPrice(cpuDto.getPrice());
-//            cpu.setBrand(cpuDto.getBrand());
-            cpu.setSocket(entityManager.find(Socket.class, cpuDto.getSocket()));
-            entityManager.merge(cpu);
-            entityManager.flush();
-            System.out.println("Received data: " + cpu.toString());
+            Cpu cpu = entityManager.find(Cpu.class, id);
+            entityManager.remove(cpu);
+            System.out.println("Removed: " + cpu.toString());
 
             return HttpStatus.OK;
         }

@@ -1,5 +1,7 @@
 package com.jachimczyk.CPUDatabase.Model;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import javax.persistence.*;
 
 @Entity(name = "CPUs")
@@ -7,7 +9,7 @@ import javax.persistence.*;
 public class Cpu
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String model;
     private float clockSpeed;
@@ -17,7 +19,7 @@ public class Cpu
     private float price;
     private String brand;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "socket_id", nullable = false)
     private Socket socket;
 
