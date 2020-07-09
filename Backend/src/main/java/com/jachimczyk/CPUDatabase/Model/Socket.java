@@ -1,8 +1,9 @@
 package com.jachimczyk.CPUDatabase.Model;
 
 import javax.persistence.*;
+import java.util.Set;
 
-@Entity
+@Entity(name = "Sockets")
 @Table(name="Sockets")
 public class Socket
 {
@@ -10,6 +11,9 @@ public class Socket
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @OneToMany(mappedBy = "socket")
+    private Set<Cpu> cpu;
 
     //<editor-fold desc="Getters & Setters">
     public Long getId()

@@ -1,13 +1,10 @@
 package com.jachimczyk.CPUDatabase.Model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity(name = "CPUs")
-@Table(name = "CPUs")
-public class Cpu
+public class CpuDto
 {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Long id;
     private String model;
     private float clockSpeed;
@@ -16,20 +13,12 @@ public class Cpu
     private int tdp;
     private float price;
     private String brand;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "socket_id", nullable = false)
-    private Socket socket;
+    private Long socket;
 
     //<editor-fold desc="Getters & Setters">
     public Long getId()
     {
         return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
     }
 
     public String getModel()
@@ -52,12 +41,12 @@ public class Cpu
         this.brand = brand;
     }
 
-    public Socket getSocket()
+    public Long getSocket()
     {
         return socket;
     }
 
-    public void setSocket(Socket socket)
+    public void setSocket(Long socket)
     {
         this.socket = socket;
     }
@@ -113,19 +102,32 @@ public class Cpu
     }
     //</editor-fold>
 
-    @Override
-    public String toString()
+    public CpuDto() {}
+
+    public CpuDto(Cpu cpu)
     {
-        return "Cpu{" +
-                "id=" + id +
-                ", model='" + model + '\'' +
-                ", clockSpeed=" + clockSpeed +
-                ", coreNumber=" + coreNumber +
-                ", threadNumber=" + threadNumber +
-                ", tdp=" + tdp +
-                ", price=" + price +
-                ", brand='" + brand + '\'' +
-                ", socket=" + socket.toString() +
-                '}';
+        this.id = cpu.getId();
+        this.model = cpu.getModel();
+        this.clockSpeed = cpu.getClockSpeed();
+        this.coreNumber = cpu.getCoreNumber();
+        this.threadNumber = cpu.getThreadNumber();
+        this.tdp = cpu.getTdp();
+        this.price = cpu.getPrice();
+        this.brand = cpu.getBrand();
+        this.socket = cpu.getSocket().getId();
+    }
+
+    public Cpu toCpu()
+    {
+        Cpu cpu = new Cpu();
+        cpu.setBrand(brand);
+        cpu.setClockSpeed(clockSpeed);
+        cpu.setCoreNumber(coreNumber);
+        cpu.setModel(model);
+        cpu.setPrice(price);
+        cpu.setTdp(tdp);
+        cpu.setThreadNumber(threadNumber);
+
+        return cpu;
     }
 }

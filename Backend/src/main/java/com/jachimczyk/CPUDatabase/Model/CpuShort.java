@@ -1,9 +1,5 @@
 package com.jachimczyk.CPUDatabase.Model;
 
-import org.hibernate.annotations.Cascade;
-
-import javax.persistence.ManyToOne;
-
 public class CpuShort
 {
     private Long id;
